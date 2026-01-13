@@ -1,0 +1,25 @@
+.admin-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .admin-container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 1rem;
+    background-color: #fff;
+    scroll-behavior: smooth;
+    height: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .admin-container {
+      flex-direction: column;
+    }
+  }
+  
