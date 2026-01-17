@@ -166,10 +166,10 @@ const WeddingDetails = () => {
       updatedDetails.eventDate = selectedEventDate;
     }
 
-    // Food details
+    // Food details - price per plate
     if (selectedFoodOption) {
-      const [name, id, image, location, description, price] = selectedFoodOption.split("|");
-      const foodCost = parseInt(selectedPeople) * parseFloat(price);
+      const [name, id, image, location, description, pricePerPlate] = selectedFoodOption.split("|");
+      const foodCost = parseInt(selectedPeople) * parseFloat(pricePerPlate);
       updatedDetails.food = {
         name,
         people: parseInt(selectedPeople),
@@ -178,43 +178,37 @@ const WeddingDetails = () => {
       };
     }
 
-    // Venue details
+    // Venue details - no pricing stored
     if (selectedVenueOption) {
-      const [name, location, image, description, pricePerHour] = selectedVenueOption.split("|");
-      const venueCost = parseInt(selectedVenueHours) * parseFloat(pricePerHour);
+      const [name, location, image, description] = selectedVenueOption.split("|");
       updatedDetails.venue = {
         name,
         hours: parseInt(selectedVenueHours),
-        cost: venueCost,
         image,
       };
     }
 
-    // DJ details
+    // DJ details - no pricing stored
     if (selectedDjOption) {
-      const [name, location, image, description, pricePerHour] = selectedDjOption.split("|");
-      const djCost = parseInt(selectedDjHours) * parseFloat(pricePerHour);
+      const [name, location, image, description] = selectedDjOption.split("|");
       updatedDetails.dj = {
         name,
         hours: parseInt(selectedDjHours),
-        cost: djCost,
         image,
       };
     }
 
-    // Photographer details
+    // Photographer details - no pricing stored
     if (selectedPhotographerOption) {
-      const [name, location, image, description, pricePerHour] = selectedPhotographerOption.split("|");
-      const photographerCost = parseInt(selectedPhotographerHours) * parseFloat(pricePerHour);
+      const [name, location, image, description] = selectedPhotographerOption.split("|");
       updatedDetails.photography = {
         name,
         hours: parseInt(selectedPhotographerHours),
-        cost: photographerCost,
         image,
       };
     }
 
-    // Decorator details
+    // Decorator details - fixed price
     if (selectedDecoratorOption) {
       const [name, location, image, description, price] = selectedDecoratorOption.split("|");
       const decoratorCost = parseFloat(price);
@@ -459,7 +453,7 @@ const WeddingDetails = () => {
               {venues.map((venue) => (
                 <option
                   key={venue._id}
-                  value={`${venue.name}|${venue.location}|${venue.image_url}|${venue.description}|${venue.pricePerHour}`}
+                  value={`${venue.name}|${venue.location}|${venue.image_url}|${venue.description}`}
                 >
                   {venue.name}
                 </option>
@@ -492,7 +486,7 @@ const WeddingDetails = () => {
               {djs.map((dj) => (
                 <option
                   key={dj._id}
-                  value={`${dj.name}|${dj.location}|${dj.image_url}|${dj.description}|${dj.pricePerHour}`}
+                  value={`${dj.name}|${dj.location}|${dj.image_url}|${dj.description}`}
                 >
                   {dj.name} - {dj.location}
                 </option>
@@ -525,7 +519,7 @@ const WeddingDetails = () => {
               {photographers.map((photographer) => (
                 <option
                   key={photographer._id}
-                  value={`${photographer.name}|${photographer.location}|${photographer.image_url}|${photographer.description}|${photographer.pricePerHour}`}
+                  value={`${photographer.name}|${photographer.location}|${photographer.image_url}|${photographer.description}`}
                 >
                   {photographer.name}
                 </option>
@@ -598,7 +592,6 @@ const WeddingDetails = () => {
                 <img src={selectedDetails.venue.image} alt={selectedDetails.venue.name} style={styles.img} />
                 <h3 style={styles.h3}>Venue: {selectedDetails.venue.name}</h3>
                 <p style={styles.p}>Number of Hours: {selectedDetails.venue.hours}</p>
-                <p style={styles.p}>Cost: ${selectedDetails.venue.cost}</p>
               </div>
             )}
             {selectedDetails.dj && (
@@ -606,7 +599,6 @@ const WeddingDetails = () => {
                 <img src={selectedDetails.dj.image} alt={selectedDetails.dj.name} style={styles.img} />
                 <h3 style={styles.h3}>DJ: {selectedDetails.dj.name}</h3>
                 <p style={styles.p}>Number of Hours: {selectedDetails.dj.hours}</p>
-                <p style={styles.p}>Cost: ${selectedDetails.dj.cost}</p>
               </div>
             )}
             {selectedDetails.photography && (
@@ -618,7 +610,6 @@ const WeddingDetails = () => {
                 />
                 <h3 style={styles.h3}>Photographer: {selectedDetails.photography.name}</h3>
                 <p style={styles.p}>Number of Hours: {selectedDetails.photography.hours}</p>
-                <p style={styles.p}>Cost: ${selectedDetails.photography.cost}</p>
               </div>
             )}
             {selectedDetails.decorators && (

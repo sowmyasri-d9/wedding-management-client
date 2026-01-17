@@ -5,14 +5,13 @@ import http from "../http";
 
 const AddPhotography = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // Get Photography ID from the URL
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     category: "",
     description: "",
-    pricePerHour: 0.0,
     image_url: "",
   });
 
@@ -27,7 +26,6 @@ const AddPhotography = () => {
             location: response.data.data.location || "",
             category: response.data.data.category || "",
             description: response.data.data.description || "",
-            pricePerHour: response.data.data.pricePerHour || 0.0,
             image_url: response.data.data.image_url || "",
           });
         } catch (error) {
@@ -50,15 +48,13 @@ const AddPhotography = () => {
     e.preventDefault();
     try {
       if (id) {
-        // Update existing photography
         await http.patch(`/photography/${id}`, formData);
         alert("Photography updated successfully!");
       } else {
-        // Add new photography
         await http.post("/photography", formData);
         alert("Photography added successfully!");
       }
-      navigate("/admin"); // Navigate back to admin page
+      navigate("/admin");
     } catch (err) {
       console.error("Error saving photography:", err.response ? err.response.data : err.message);
       alert("Failed to save photography. Please try again.");
@@ -98,14 +94,6 @@ const AddPhotography = () => {
           name="description"
           placeholder="Description..."
           value={formData.description}
-          onChange={handleFormChange}
-          required
-        />
-        <label htmlFor="pricePerHour">Price Per Hour</label>
-        <input
-          type="number"
-          name="pricePerHour"
-          value={formData.pricePerHour}
           onChange={handleFormChange}
           required
         />

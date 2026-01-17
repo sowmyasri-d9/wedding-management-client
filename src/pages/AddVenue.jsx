@@ -1,3 +1,4 @@
+// export default AddVenueForm;
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../css/Forms.css";
@@ -5,14 +6,13 @@ import http from "../http";
 
 const AddVenueForm = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // Get Venue ID from the URL
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     category: "",
     image_url: "",
-    pricePerHour: 0.0,
   });
 
   // Fetch existing venue details if editing
@@ -26,7 +26,6 @@ const AddVenueForm = () => {
             location: response.data.data.location || "",
             category: response.data.data.category || "",
             image_url: response.data.data.image_url || "",
-            pricePerHour: response.data.data.pricePerHour || 0.0,
           });
         } catch (error) {
           console.error("Error fetching venue:", error);
@@ -48,15 +47,13 @@ const AddVenueForm = () => {
     e.preventDefault();
     try {
       if (id) {
-        // Update existing venue
         await http.patch(`/venues/${id}`, formData);
         alert("Venue updated successfully!");
       } else {
-        // Add new venue
         await http.post("/venues", formData);
         alert("Venue added successfully!");
       }
-      navigate("/admin"); // Navigate back to admin page
+      navigate("/admin");
     } catch (err) {
       console.error("Error saving venue:", err);
       alert("Failed to save venue. Please try again.");
@@ -99,16 +96,6 @@ const AddVenueForm = () => {
           placeholder="Image URL"
           name="image_url"
           value={formData.image_url}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Price Per Hour</label>
-        <input
-          type="number"
-          placeholder="Price Per Hour"
-          name="pricePerHour"
-          value={formData.pricePerHour}
           onChange={handleChange}
           required
         />

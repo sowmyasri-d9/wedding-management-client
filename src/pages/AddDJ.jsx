@@ -5,14 +5,13 @@ import http from "../http";
 
 const AddDJForm = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // Get DJ ID from the URL
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     category: "",
     description: "",
-    pricePerHour: 0.0,
     image_url: "",
   });
 
@@ -26,8 +25,7 @@ const AddDJForm = () => {
             name: response.data.data.name || "",
             location: response.data.data.location || "",
             category: response.data.data.category || "",
-            descriprion: response.data.descriprion || "",
-            pricePerHour: response.data.pricePerHour || 0.00,
+            description: response.data.data.description || "",
             image_url: response.data.data.image_url || "",
           });
         } catch (error) {
@@ -50,15 +48,13 @@ const AddDJForm = () => {
     e.preventDefault();
     try {
       if (id) {
-        // Update existing DJ
         await http.patch(`/djs/${id}`, formData);
         alert("DJ updated successfully!");
       } else {
-        // Add new DJ
         await http.post("/djs", formData);
         alert("DJ added successfully!");
       }
-      navigate("/admin"); // Navigate back to admin page
+      navigate("/admin");
     } catch (err) {
       console.error("Error saving DJ:", err.response ? err.response.data : err.message);
       alert("Failed to save DJ. Please try again.");
@@ -98,15 +94,6 @@ const AddDJForm = () => {
           name="description"
           placeholder="Description..."
           value={formData.description}
-          onChange={handleFormChange}
-          required
-        />
-        
-        <label htmlFor="pricePerHour">Price Per Hour</label>
-        <input
-          type="number"
-          name="pricePerHour"
-          value={formData.pricePerHour}
           onChange={handleFormChange}
           required
         />

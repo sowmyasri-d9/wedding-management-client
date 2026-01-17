@@ -124,7 +124,20 @@ const Dashboard = () => {
         ? item.pricePerHour * (item.hours || 1)
         : item.price,
       hours: item.pricePerHour ? item.hours || 1 : 0, // Only include hours for items with pricePerHour
+      image: item.image_url, // Add image to the selected item
     };
+
+    // For food and decorators, remove hours field since they don't charge per hour
+    if (selection === "food-caterers" || selection === "decorations") {
+      delete updatedItem.hours;
+      
+      // For food caterers, also add people count
+      if (selection === "food-caterers") {
+        updatedItem.people = item.people || 100; // Default to 100 people if not specified
+        // Recalculate cost for food based on number of people
+        updatedItem.cost = item.price * updatedItem.people;
+      }
+    }
 
     // Update selectedDetails based on the selection type
     setSelectedDetails((prev) => ({
@@ -153,11 +166,45 @@ const Dashboard = () => {
 
   const handleBookNow = async () => {
     try {
-      const response = await http.post("/booking", selectedDetails);
+      const bookingData = {
+        ...selectedDetails,
+        // Ensure all items have required fields
+        food: selectedDetails.food ? {
+          name: selectedDetails.food.name,
+          cost: selectedDetails.food.cost,
+          image: selectedDetails.food.image,
+          people: selectedDetails.food.people || 100
+        } : null,
+        venue: selectedDetails.venue ? {
+          name: selectedDetails.venue.name,
+          cost: selectedDetails.venue.cost,
+          image: selectedDetails.venue.image,
+          hours: selectedDetails.venue.hours || 4
+        } : null,
+        dj: selectedDetails.dj ? {
+          name: selectedDetails.dj.name,
+          cost: selectedDetails.dj.cost,
+          image: selectedDetails.dj.image,
+          hours: selectedDetails.dj.hours || 4
+        } : null,
+        photography: selectedDetails.photography ? {
+          name: selectedDetails.photography.name,
+          cost: selectedDetails.photography.cost,
+          image: selectedDetails.photography.image,
+          hours: selectedDetails.photography.hours || 4
+        } : null,
+        decorators: selectedDetails.decorators ? {
+          name: selectedDetails.decorators.name,
+          cost: selectedDetails.decorators.cost,
+          image: selectedDetails.decorators.image
+        } : null
+      };
+
+      const response = await http.post("/booking", bookingData);
       if (response.status === 201) {
         alert("Booking created successfully!");
         navigate(`/budget/${encodeURIComponent(selectedDetails.email)}`, {
-          state: { selectedDetails },
+          state: { selectedDetails: bookingData },
         });
       } else {
         alert("Failed to create booking. Please try again.");
@@ -365,7 +412,6 @@ const Dashboard = () => {
           )}
 
           {/* ADMIN BUTTON */}
-
           {isAdmin() && (
             <button
               onClick={redirectToAdmin}
@@ -390,7 +436,8 @@ const Dashboard = () => {
               key={item._id}
               item={item}
               fields={defaultFields}
-              onSelect={handleSelectItem}
+              onSelect={() => handleSelectItem(item)}
+              selection={selection}
             />
           ))}
         </div>
@@ -436,9 +483,23 @@ const Dashboard = () => {
                     }}
                   >
                     <h3>{key.toUpperCase()}</h3>
+                    {value.image && (
+                      <img 
+                        src={value.image} 
+                        alt={value.name}
+                        style={{
+                          width: "100%",
+                          maxHeight: "200px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          marginBottom: "10px"
+                        }}
+                      />
+                    )}
                     <p>Name: {value.name}</p>
                     <p>Cost: ${value.cost}</p>
                     {value.hours && <p>Hours: {value.hours}</p>}
+                    {value.people && <p>People: {value.people}</p>}
                   </div>
                 );
               }

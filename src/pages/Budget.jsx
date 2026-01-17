@@ -1,3 +1,4 @@
+// export default Budget;
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -5,10 +6,7 @@ const Budget = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Extract data passed via state or query parameters
   const { selectedDetails } = location.state || {};
-
-  // State to manage visibility of budget details and buttons
   const [showBudget, setShowBudget] = useState(false);
 
   if (!selectedDetails) {
@@ -17,20 +15,15 @@ const Budget = () => {
 
   const { food, venue, dj, photography, decorators, email } = selectedDetails;
 
-  // Function to calculate the total cost
   const calculateTotalCost = (selectedDetails) => {
     let total = 0;
-    if (selectedDetails.food) total += selectedDetails.food.cost;
-    if (selectedDetails.venue) total += selectedDetails.venue.cost;
-    if (selectedDetails.dj) total += selectedDetails.dj.cost;
-    if (selectedDetails.photography) total += selectedDetails.photography.cost;
-    if (selectedDetails.decorators) total += selectedDetails.decorators.cost;
+    if (selectedDetails.food && selectedDetails.food.cost) total += selectedDetails.food.cost;
+    if (selectedDetails.decorators && selectedDetails.decorators.cost) total += selectedDetails.decorators.cost;
     return total;
   };
 
   const totalCost = calculateTotalCost(selectedDetails);
 
-  // Inline styles
   const styles = {
     body: {
       background:
@@ -110,7 +103,7 @@ const Budget = () => {
         {food && (
           <div style={styles.detailItem}>
             <h3 style={styles.detailItemH3}>Food Catering: {food.name}</h3>
-            <p style={styles.detailItemP}>Number of People: {food.people}</p>
+            {food.people && <p style={styles.detailItemP}>Number of People: {food.people}</p>}
           </div>
         )}
 
@@ -118,7 +111,7 @@ const Budget = () => {
         {venue && (
           <div style={styles.detailItem}>
             <h3 style={styles.detailItemH3}>Venue: {venue.name}</h3>
-            <p style={styles.detailItemP}>Number of Hours: {venue.hours}</p>
+            {/* {venue.hours && <p style={styles.detailItemP}>Number of Hours: {venue.hours}</p>} */}
           </div>
         )}
 
@@ -126,7 +119,20 @@ const Budget = () => {
         {dj && (
           <div style={styles.detailItem}>
             <h3 style={styles.detailItemH3}>DJ Service: {dj.name}</h3>
-            <p style={styles.detailItemP}>Number of Hours: {dj.hours}</p>
+          </div>
+        )}
+
+        {/* Photography Details */}
+        {photography && (
+          <div style={styles.detailItem}>
+            <h3 style={styles.detailItemH3}>Photography: {photography.name}</h3>
+          </div>
+        )}
+
+        {/* Decorators Details */}
+        {decorators && (
+          <div style={styles.detailItem}>
+            <h3 style={styles.detailItemH3}>Decorator: {decorators.name}</h3>
           </div>
         )}
 
@@ -137,32 +143,15 @@ const Budget = () => {
           </button>
         </div>
 
-        {/* Budget Details (Conditionally Rendered) */}
+        {/* Budget Details (Conditionally Rendered) - Only Food and Decorators have costs */}
         {showBudget && (
           <div>
-            {food && (
+            {food && food.cost && (
               <div style={styles.detailItem}>
                 <h3 style={styles.detailItemH3}>Food Cost: ${food.cost}</h3>
               </div>
             )}
-            {venue && (
-              <div style={styles.detailItem}>
-                <h3 style={styles.detailItemH3}>Venue Cost: ${venue.cost}</h3>
-              </div>
-            )}
-            {dj && (
-              <div style={styles.detailItem}>
-                <h3 style={styles.detailItemH3}>DJ Cost: ${dj.cost}</h3>
-              </div>
-            )}
-            {photography && (
-              <div style={styles.detailItem}>
-                <h3 style={styles.detailItemH3}>
-                  Photography Cost: ${photography.cost}
-                </h3>
-              </div>
-            )}
-            {decorators && (
+            {decorators && decorators.cost && (
               <div style={styles.detailItem}>
                 <h3 style={styles.detailItemH3}>
                   Decorator Cost: ${decorators.cost}
