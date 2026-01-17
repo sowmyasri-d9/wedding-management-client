@@ -13,7 +13,7 @@ const Budget = () => {
     return <p>No booking details found. Please go back and book again.</p>;
   }
 
-  const { food, venue, dj, photography, decorators, email } = selectedDetails;
+  const { food, venue, dj, photography, decorators } = selectedDetails;
 
   const calculateTotalCost = (selectedDetails) => {
     let total = 0;

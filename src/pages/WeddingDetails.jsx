@@ -168,7 +168,7 @@ const WeddingDetails = () => {
 
     // Food details - price per plate
     if (selectedFoodOption) {
-      const [name, id, image, location, description, pricePerPlate] = selectedFoodOption.split("|");
+      const [name, image, pricePerPlate] = selectedFoodOption.split("|");
       const foodCost = parseInt(selectedPeople) * parseFloat(pricePerPlate);
       updatedDetails.food = {
         name,
@@ -180,7 +180,7 @@ const WeddingDetails = () => {
 
     // Venue details - no pricing stored
     if (selectedVenueOption) {
-      const [name, location, image, description] = selectedVenueOption.split("|");
+      const [name, image] = selectedVenueOption.split("|");
       updatedDetails.venue = {
         name,
         hours: parseInt(selectedVenueHours),
@@ -190,7 +190,7 @@ const WeddingDetails = () => {
 
     // DJ details - no pricing stored
     if (selectedDjOption) {
-      const [name, location, image, description] = selectedDjOption.split("|");
+      const [name, image] = selectedDjOption.split("|");
       updatedDetails.dj = {
         name,
         hours: parseInt(selectedDjHours),
@@ -200,7 +200,7 @@ const WeddingDetails = () => {
 
     // Photographer details - no pricing stored
     if (selectedPhotographerOption) {
-      const [name, location, image, description] = selectedPhotographerOption.split("|");
+      const [name, image ] = selectedPhotographerOption.split("|");
       updatedDetails.photography = {
         name,
         hours: parseInt(selectedPhotographerHours),
@@ -210,7 +210,7 @@ const WeddingDetails = () => {
 
     // Decorator details - fixed price
     if (selectedDecoratorOption) {
-      const [name, location, image, description, price] = selectedDecoratorOption.split("|");
+      const [name, image, price] = selectedDecoratorOption.split("|");
       const decoratorCost = parseFloat(price);
       updatedDetails.decorators = {
         name,
