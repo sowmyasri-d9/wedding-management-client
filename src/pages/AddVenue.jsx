@@ -14,6 +14,7 @@ const AddVenueForm = () => {
     location: "",
     category: "",
     image_url: "",
+    pricePerHour: 0.00,
   });
 
   // Fetch existing venue details if editing
@@ -27,6 +28,7 @@ const AddVenueForm = () => {
             location: response.data.data.location || "",
             category: response.data.data.category || "",
             image_url: response.data.data.image_url || "",
+            pricePerHour: response.data.data.pricePerHour || 0.00
           });
         } catch (error) {
           console.error("Error fetching venue:", error);
@@ -97,6 +99,15 @@ const AddVenueForm = () => {
           placeholder="Image URL"
           name="image_url"
           value={formData.image_url}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="number"
+          placeholder="Ptice Per Hour"
+          name="pricePerHour"
+          value={formData.pricePerHour}
           onChange={handleChange}
           required
         />

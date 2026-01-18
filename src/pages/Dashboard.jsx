@@ -121,16 +121,16 @@ const Dashboard = () => {
     const updatedItem = {
       name: item.name,
       cost: item.pricePerHour
-        ? item.pricePerHour * (item.hours || 1)
+        ? item.pricePerHour * (item.hours || 4)
         : item.price,
-      hours: item.pricePerHour ? item.hours || 1 : 0, // Only include hours for items with pricePerHour
-      image: item.image_url, // Add image to the selected item
+      hours: item.pricePerHour ? (item.hours || 4) : undefined,
+      image: item.image_url,
     };
 
     // For food and decorators, remove hours field since they don't charge per hour
     if (selection === "food-caterers" || selection === "decorations") {
       delete updatedItem.hours;
-      
+
       // For food caterers, also add people count
       if (selection === "food-caterers") {
         updatedItem.people = item.people || 100; // Default to 100 people if not specified
@@ -216,7 +216,7 @@ const Dashboard = () => {
   };
 
   const handleSuggested = () => {
-    if (weddingId===null) {
+    if (weddingId === null) {
       alert(`You have to select wedding in Cultures`);
       return;
     }
@@ -298,8 +298,8 @@ const Dashboard = () => {
                   hoveredItem === item
                     ? "#2980b9"
                     : activeItem === item
-                    ? "#1c5980"
-                    : "#3498db",
+                      ? "#1c5980"
+                      : "#3498db",
                 color: "#fff",
                 padding: "0.5rem",
                 boxShadow: "0px 4px 4px -2px rgba(0, 0, 0, 0.3)",
@@ -309,8 +309,8 @@ const Dashboard = () => {
                   hoveredItem === item
                     ? "scale(1.05)"
                     : activeItem === item
-                    ? "scale(0.95)"
-                    : "none",
+                      ? "scale(0.95)"
+                      : "none",
               }}
               onClick={() => handleClick(item)}
               onMouseEnter={() => setHoveredItem(item)}
@@ -430,7 +430,7 @@ const Dashboard = () => {
         </div>
 
         {/* Data Cards */}
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <div style={{ display: "grid", padding: "8px", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
           {data.map((item) => (
             <Card
               key={item._id}
@@ -484,8 +484,8 @@ const Dashboard = () => {
                   >
                     <h3>{key.toUpperCase()}</h3>
                     {value.image && (
-                      <img 
-                        src={value.image} 
+                      <img
+                        src={value.image}
                         alt={value.name}
                         style={{
                           width: "100%",

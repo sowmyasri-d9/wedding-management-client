@@ -19,6 +19,9 @@ const Budget = () => {
     let total = 0;
     if (selectedDetails.food && selectedDetails.food.cost) total += selectedDetails.food.cost;
     if (selectedDetails.decorators && selectedDetails.decorators.cost) total += selectedDetails.decorators.cost;
+    if (selectedDetails.venue && selectedDetails.venue.cost) total += selectedDetails.venue.cost;
+    if (selectedDetails.dj && selectedDetails.dj.cost) total += selectedDetails.dj.cost;
+    if (selectedDetails.photography && selectedDetails.photography.cost) total += selectedDetails.photography.cost;
     return total;
   };
 
@@ -111,7 +114,7 @@ const Budget = () => {
         {venue && (
           <div style={styles.detailItem}>
             <h3 style={styles.detailItemH3}>Venue: {venue.name}</h3>
-            {/* {venue.hours && <p style={styles.detailItemP}>Number of Hours: {venue.hours}</p>} */}
+            {venue.hours && <p style={styles.detailItemP}>Number of Hours: {venue.hours}</p>}
           </div>
         )}
 
@@ -119,6 +122,7 @@ const Budget = () => {
         {dj && (
           <div style={styles.detailItem}>
             <h3 style={styles.detailItemH3}>DJ Service: {dj.name}</h3>
+            {dj.hours && <p style={styles.detailItemP}>Number of Hours: {dj.hours}</p>}
           </div>
         )}
 
@@ -126,6 +130,7 @@ const Budget = () => {
         {photography && (
           <div style={styles.detailItem}>
             <h3 style={styles.detailItemH3}>Photography: {photography.name}</h3>
+            {photography.hours && <p style={styles.detailItemP}>Number of Hours: {photography.hours}</p>}
           </div>
         )}
 
@@ -155,6 +160,30 @@ const Budget = () => {
               <div style={styles.detailItem}>
                 <h3 style={styles.detailItemH3}>
                   Decorator Cost: ${decorators.cost}
+                </h3>
+              </div>
+            )}
+
+            {dj && dj.cost && (
+              <div style={styles.detailItem}>
+                <h3 style={styles.detailItemH3}>
+                  DJ's Cost: ${dj.cost}
+                </h3>
+              </div>
+            )}
+
+            {venue && venue.cost && (
+              <div style={styles.detailItem}>
+                <h3 style={styles.detailItemH3}>
+                  Venue Cost: ${venue.cost}
+                </h3>
+              </div>
+            )}
+
+            {photography && photography.cost && (
+              <div style={styles.detailItem}>
+                <h3 style={styles.detailItemH3}>
+                  Photography Cost: ${photography.cost}
                 </h3>
               </div>
             )}

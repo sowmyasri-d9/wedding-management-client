@@ -13,6 +13,7 @@ const AddPhotography = () => {
     category: "",
     description: "",
     image_url: "",
+    pricePerHour: 0.00
   });
 
   // Fetch existing photography details if editing
@@ -27,6 +28,7 @@ const AddPhotography = () => {
             category: response.data.data.category || "",
             description: response.data.data.description || "",
             image_url: response.data.data.image_url || "",
+            pricePerHour: response.data.data.pricePerHour || 0.00
           });
         } catch (error) {
           console.error("Error fetching photography:", error);
@@ -94,6 +96,14 @@ const AddPhotography = () => {
           name="description"
           placeholder="Description..."
           value={formData.description}
+          onChange={handleFormChange}
+          required
+        />
+        <input
+          type="number"
+          name="pricePerHour"
+          placeholder="Description..."
+          value={formData.pricePerHour}
           onChange={handleFormChange}
           required
         />

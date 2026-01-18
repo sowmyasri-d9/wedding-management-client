@@ -13,6 +13,7 @@ const AddDJForm = () => {
     category: "",
     description: "",
     image_url: "",
+    pricePerHour: 0.00
   });
 
   // Fetch existing DJ details if editing
@@ -27,6 +28,7 @@ const AddDJForm = () => {
             category: response.data.data.category || "",
             description: response.data.data.description || "",
             image_url: response.data.data.image_url || "",
+            pricePerHour: response.data.data.pricePerHour || 0.00
           });
         } catch (error) {
           console.error("Error fetching DJ:", error);
@@ -102,6 +104,14 @@ const AddDJForm = () => {
           name="image_url"
           placeholder="Image URL"
           value={formData.image_url}
+          onChange={handleFormChange}
+          required
+        />
+        <input
+          type="number"
+          name="pricePerHour"
+          placeholder="Price Per Hour"
+          value={formData.pricePerHour}
           onChange={handleFormChange}
           required
         />
