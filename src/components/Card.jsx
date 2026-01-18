@@ -67,6 +67,18 @@ const Card = ({ item, fields, onSelect, selection }) => {
       displayData.push({ label: "Cost", value: `$${item.price}` });
     }
 
+    if (selection === "djs" && item.pricePerHour) {
+      displayData.push({ label: "Price Per Hour", value: `$${item.pricePerHour}` });
+    }
+
+    if (selection === "venues" && item.pricePerHour) {
+      displayData.push({ label: "Price Per Hour", value: `$${item.pricePerHour}` });
+    }
+
+    if (selection === "photography" && item.pricePerHour) {
+      displayData.push({ label: "Price Per Hour", value: `$${item.pricePerHour}` });
+    }
+
     // For venue, DJ, photography - don't show any price
     // They will select hours in dropdown but price is not displayed
 
@@ -95,9 +107,9 @@ const Card = ({ item, fields, onSelect, selection }) => {
       <img
         src={item.image_url}
         alt={item.name}
-        style={{ 
-          width: "100px", 
-          height: "100px", 
+        style={{
+          width: "100px",
+          height: "100px",
           borderRadius: "8px",
           objectFit: "cover"
         }}
