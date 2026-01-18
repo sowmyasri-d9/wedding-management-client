@@ -173,6 +173,7 @@ const WeddingDetails = () => {
       updatedDetails.food = {
         name,
         people: parseInt(selectedPeople),
+        pricePerPlate: parseFloat(pricePerPlate),
         cost: foodCost,
         image,
       };
@@ -420,7 +421,7 @@ const WeddingDetails = () => {
               {foodCaterers.map((caterer) => (
                 <option
                   key={caterer._id}
-                  value={`${caterer.name}|${caterer._id}|${caterer.image_url}|${caterer.location}|${caterer.description}|${caterer.price}`}
+                  value={`${caterer.name}|${caterer.image_url}|${caterer.price}`}
                 >
                   {caterer.name}
                 </option>
@@ -453,7 +454,7 @@ const WeddingDetails = () => {
               {venues.map((venue) => (
                 <option
                   key={venue._id}
-                  value={`${venue.name}|${venue.location}|${venue.image_url}|${venue.description}`}
+                  value={`${venue.name}|${venue.image_url}`}
                 >
                   {venue.name}
                 </option>
@@ -486,7 +487,7 @@ const WeddingDetails = () => {
               {djs.map((dj) => (
                 <option
                   key={dj._id}
-                  value={`${dj.name}|${dj.location}|${dj.image_url}|${dj.description}`}
+                  value={`${dj.name}|${dj.image_url}`}
                 >
                   {dj.name} - {dj.location}
                 </option>
@@ -519,7 +520,7 @@ const WeddingDetails = () => {
               {photographers.map((photographer) => (
                 <option
                   key={photographer._id}
-                  value={`${photographer.name}|${photographer.location}|${photographer.image_url}|${photographer.description}`}
+                  value={`${photographer.name}|${photographer.image_url}`}
                 >
                   {photographer.name}
                 </option>
@@ -552,7 +553,7 @@ const WeddingDetails = () => {
               {decorators.map((decorator) => (
                 <option
                   key={decorator._id}
-                  value={`${decorator.name}|${decorator.location}|${decorator.image_url}|${decorator.description}|${decorator.price}`}
+                  value={`${decorator.name}|${decorator.image_url}|${decorator.price}`}
                 >
                   {decorator.name}
                 </option>
@@ -584,7 +585,8 @@ const WeddingDetails = () => {
                 <img src={selectedDetails.food.image} alt={selectedDetails.food.name} style={styles.img} />
                 <h3 style={styles.h3}>Food Catering: {selectedDetails.food.name}</h3>
                 <p style={styles.p}>Number of People: {selectedDetails.food.people}</p>
-                <p style={styles.p}>Cost: ${selectedDetails.food.cost}</p>
+                <p style={styles.p}>Price Per Plate: ${selectedDetails.food.pricePerPlate}</p>
+                <p style={styles.p}>Total Cost: ${selectedDetails.food.cost}</p>
               </div>
             )}
             {selectedDetails.venue && (
